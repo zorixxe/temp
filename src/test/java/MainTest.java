@@ -3,10 +3,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertThrows;
 
+import static org.junit.Assert.*;
 
 
 public class MainTest {
@@ -39,5 +37,16 @@ public class MainTest {
         List<String> incorrectSortedList = Arrays.asList("Robin", "Daniel", "Tildeman", "Emma", "Helene");
         List<String> actualSortedList = Main.sortFriendsList(unsortedList);
         assertNotEquals(incorrectSortedList, actualSortedList);
+    }
+
+    @Test
+    public void testFetchFriendsListPerformance() throws IOException {
+        long startTime = System.nanoTime();
+        List<String> friendsList = Main.fetchFriendsList("friends.txt");
+        long duration = System.nanoTime() - startTime;
+
+        System.out.println("Time taken: " + duration + " ns");
+
+        assertTrue("Fetching took too long", duration < 1_000_000_000L);
     }
 }
